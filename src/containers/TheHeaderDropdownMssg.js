@@ -18,7 +18,7 @@ const TheHeaderDropdownMssg = () => {
       direction="down"
     >
       <CDropdownToggle className="c-header-nav-link" caret={false}>
-        <CIcon name="cil-envelope-open" /><CBadge shape="pill" color="info">{itemsCount}</CBadge>
+        <CIcon name="cil-bell" /><CBadge shape="pill" color="danger">{itemsCount}</CBadge>
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownItem
@@ -26,7 +26,7 @@ const TheHeaderDropdownMssg = () => {
           tag="div"
           color="light"
         >
-          <strong>You have {itemsCount} messages</strong>
+          <strong>You have {itemsCount} notification </strong>
         </CDropdownItem>
         <CDropdownItem href="#">
           <div className="message">
@@ -41,11 +41,11 @@ const TheHeaderDropdownMssg = () => {
               </div>
             </div>
             <div>
-              <small className="text-muted">John Doe</small>
+              {/* <small className="text-muted">Yiorgos Avraamu</small> */}
               <small className="text-muted float-right mt-1">Just now</small>
             </div>
             <div className="text-truncate font-weight-bold">
-              <span className="fa fa-exclamation text-danger"></span> Important message
+              <span className="fa fa-exclamation text-danger"></span> Yiorgos Avraamu Arrived
             </div>
             <div className="small text-muted text-truncate">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...

@@ -17,8 +17,8 @@ const TheHeaderDropdownTasks = () => {
       className="c-header-nav-item mx-2"
     >
       <CDropdownToggle className="c-header-nav-link" caret={false}>
-        <CIcon name="cil-list" />
-        <CBadge shape="pill" color="warning">{itemsCount}</CBadge>
+        {/* <CIcon name="cil-list" />
+        <CBadge shape="pill" color="warning">{itemsCount}</CBadge> */}
       </CDropdownToggle>
       <CDropdownMenu placement="bottom-end" className="pt-0">
         <CDropdownItem

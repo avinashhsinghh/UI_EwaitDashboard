@@ -10,6 +10,7 @@ import {
   CCol,
   CProgress,
   CRow,
+  CSwitch,
   CCallout
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
@@ -32,12 +33,12 @@ const Dashboard = () => {
       <CRow>
         <CCol>
           <CCard>
-            <CCardHeader>
+            {/* <CCardHeader>
               Patients Detail
-            </CCardHeader>
+            </CCardHeader> */}
             <CCardBody>
 
-              <br />
+              {/* <br /> */}
               {/* edit here */}
               <table className="table table-hover table-outline mb-0 d-none d-sm-table">
                 <thead className="thead-light">
@@ -61,31 +62,30 @@ const Dashboard = () => {
                     </td>
                     <td>
                       <div>Yiorgos Avraamu</div>
-                      <div className="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015
-                      </div>
                     </td>
                     <td className="text-center">
-                      <CIcon height={25} name="cif-us" title="us" id="us" />
+                      <div> 05/01/2020 09:00 AM</div>
                     </td>
                     <td>
                       <div className="clearfix">
                         <div className="float-left">
-                          <strong>50%</strong>
-                        </div>
-                        <div className="float-right">
-                          <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
+                        <CBadge className="mr-1" color="primary">Yes</CBadge>
                         </div>
                       </div>
-                      <CProgress className="progress-xs" color="success" value="50" />
                     </td>
                     <td className="text-center">
-                      <CIcon height={25} name="cib-cc-mastercard" />
+                      <CSwitch className={'mx-1'} color={'primary'} labelOn={'\u2713'} labelOff={'\u2715'} defaultChecked />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>10 sec ago</strong>
+                      <div className="small text-muted">
+                        <CBadge className="mr-1" color="primary">waiting to be called</CBadge>
+                      </div>
+                      <CIcon height={25} name="cil-phone" title="phone" id="phone" />
                     </td>
+                    <td>
+                      <div>Dr. Casey</div>
+                    </td>
+                    
                   </tr>
                   <tr>
                     <td className="text-center">
@@ -96,31 +96,29 @@ const Dashboard = () => {
                     </td>
                     <td>
                       <div>Avram Tarasios</div>
-                      <div className="small text-muted">
-
-                        <span>Recurring</span> | Registered: Jan 1, 2015
-                      </div>
                     </td>
                     <td className="text-center">
-                      <CIcon height={25} name="cif-br" title="br" id="br" />
+                      <div>05/01/2020 09:00 AM</div>
                     </td>
                     <td>
                       <div className="clearfix">
                         <div className="float-left">
-                          <strong>10%</strong>
-                        </div>
-                        <div className="float-right">
-                          <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
+                          <CBadge className="mr-1" color="secondary">No</CBadge>
                         </div>
                       </div>
-                      <CProgress className="progress-xs" color="info" value="10" />
+                      
                     </td>
                     <td className="text-center">
-                      <CIcon height={25} name="cib-cc-visa" />
+                      <CSwitch className={'mx-1'} color={'primary'} labelOn={'\u2713'} labelOff={'\u2715'} defaultChecked />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>5 minutes ago</strong>
+                      <div className="small text-muted">
+                      <CBadge className="mr-1" color="secondary">not arrived</CBadge>
+                        </div>
+                        <CIcon height={25} name="cil-phone" title="phone" id="phone" />
+                    </td>
+                    <td>
+                      <div>Dr. Casey</div>
                     </td>
                   </tr>
                   <tr>
@@ -132,137 +130,34 @@ const Dashboard = () => {
                     </td>
                     <td>
                       <div>Quintin Ed</div>
-                      <div className="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015
-                      </div>
+                      
                     </td>
                     <td className="text-center">
-                      <CIcon height={25} name="cif-in" title="in" id="in" />
+                      <div>05/01/2020 11:00 AM</div>
                     </td>
                     <td>
                       <div className="clearfix">
                         <div className="float-left">
-                          <strong>74%</strong>
+                          <CBadge className="mr-1" color="success">With Doctor</CBadge>
                         </div>
-                        <div className="float-right">
-                          <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                        </div>
+                        
                       </div>
-                      <CProgress className="progress-xs" color="warning" value="74" />
+                      
                     </td>
                     <td className="text-center">
-                      <CIcon height={25} name="cib-stripe" />
+                      <CSwitch className={'mx-1'} color={'primary'} labelOn={'\u2713'} labelOff={'\u2715'} defaultChecked />
                     </td>
                     <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>1 hour ago</strong>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="text-center">
-                      <div className="c-avatar">
-                        <img src={'avatars/4.jpg'} className="c-avatar-img" alt="admin@bootstrapmaster.com" />
-                        <span className="c-avatar-status bg-secondary"></span>
-                      </div>
-                    </td>
-                    <td>
-                      <div>Enéas Kwadwo</div>
                       <div className="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015
+                        <CBadge className="mr-1" color="info">called</CBadge>
                       </div>
-                    </td>
-                    <td className="text-center">
-                      <CIcon height={25} name="cif-fr" title="fr" id="fr" />
+                        <CIcon height={25} name="cil-phone" title="phone" id="phone" />
                     </td>
                     <td>
-                      <div className="clearfix">
-                        <div className="float-left">
-                          <strong>98%</strong>
-                        </div>
-                        <div className="float-right">
-                          <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                        </div>
-                      </div>
-                      <CProgress className="progress-xs" color="danger" value="98" />
-                    </td>
-                    <td className="text-center">
-                      <CIcon height={25} name="cib-paypal" />
-                    </td>
-                    <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>Last month</strong>
+                      <div>Dr. Casey</div>
                     </td>
                   </tr>
-                  <tr>
-                    <td className="text-center">
-                      <div className="c-avatar">
-                        <img src={'avatars/5.jpg'} className="c-avatar-img" alt="admin@bootstrapmaster.com" />
-                        <span className="c-avatar-status bg-success"></span>
-                      </div>
-                    </td>
-                    <td>
-                      <div>Agapetus Tadeáš</div>
-                      <div className="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015
-                      </div>
-                    </td>
-                    <td className="text-center">
-                      <CIcon height={25} name="cif-es" title="es" id="es" />
-                    </td>
-                    <td>
-                      <div className="clearfix">
-                        <div className="float-left">
-                          <strong>22%</strong>
-                        </div>
-                        <div className="float-right">
-                          <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                        </div>
-                      </div>
-                      <CProgress className="progress-xs" color="info" value="22" />
-                    </td>
-                    <td className="text-center">
-                      <CIcon height={25} name="cib-google-pay"/>
-                    </td>
-                    <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>Last week</strong>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="text-center">
-                      <div className="c-avatar">
-                        <img src={'avatars/6.jpg'} className="c-avatar-img" alt="admin@bootstrapmaster.com" />
-                        <span className="c-avatar-status bg-danger"></span>
-                      </div>
-                    </td>
-                    <td>
-                      <div>Friderik Dávid</div>
-                      <div className="small text-muted">
-                        <span>New</span> | Registered: Jan 1, 2015
-                      </div>
-                    </td>
-                    <td className="text-center">
-                      <CIcon height={25} name="cif-pl" title="pl" id="pl" />
-                    </td>
-                    <td>
-                      <div className="clearfix">
-                        <div className="float-left">
-                          <strong>43%</strong>
-                        </div>
-                        <div className="float-right">
-                          <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                        </div>
-                      </div>
-                      <CProgress className="progress-xs" color="success" value="43" />
-                    </td>
-                    <td className="text-center">
-                      <CIcon height={25} name="cib-cc-amex" />
-                    </td>
-                    <td>
-                      <div className="small text-muted">Last login</div>
-                      <strong>Yesterday</strong>
-                    </td>
-                  </tr>
+                  
                 </tbody>
               </table>
 
