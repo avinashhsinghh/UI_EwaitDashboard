@@ -11,21 +11,44 @@ import {
 import CIcon from '@coreui/icons-react'
 import ChartLineSimple from '../charts/ChartLineSimple'
 import ChartBarSimple from '../charts/ChartBarSimple'
+let array1;
+let appBook;
+function countnumber(props){
+  let patientArriveYes=0,patientArriveNo=0;
+  let i=0;
+  console.log(props.apiData)
+  for(i=0;i<props.props.apiData.length();i++)
+  { if(props.apiData.arrived=="With Doctor")
+    appBook=appBook+1
+    else if (props.apiData.arrived=="No")
+    patientArriveNo=patientArriveNo+1
+    else if(props.apiData.arrived=="Yes")
+    patientArriveYes=patientArriveYes+1
+  }
+  array1[0]=appBook
+  array1[1]=patientArriveNo
+  array1[2]=patientArriveYes
 
-const WidgetsDropdown = () => {
+  return array1
+
+}
+
+const WidgetsDropdown = (props) => {
   // render
+  console.log(props.apiData)
+
   return (
     <CRow>
       <CCol sm="6" lg="3">
         <CWidgetDropdown
           color="gradient-primary"
-          header="20"
+          header={props.apiData.length}
           text="Total Appointment Booked"
           footerSlot={
             <div></div>
           }
         >
-    
+
         </CWidgetDropdown>
       </CCol>
 
@@ -38,7 +61,7 @@ const WidgetsDropdown = () => {
             <div></div>
           }
         >
-          
+
         </CWidgetDropdown>
       </CCol>
 
@@ -51,7 +74,7 @@ const WidgetsDropdown = () => {
             <div></div>
           }
         >
-          
+
         </CWidgetDropdown>
       </CCol>
 
@@ -64,7 +87,7 @@ const WidgetsDropdown = () => {
             <div></div>
           }
         >
-          
+
         </CWidgetDropdown>
       </CCol>
     </CRow>

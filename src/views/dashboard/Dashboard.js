@@ -1,4 +1,5 @@
 import React, { lazy, useEffect, useState } from 'react'
+import {link, Link} from 'react-router-dom';
 import {
   CBadge,
   CButton,
@@ -37,7 +38,7 @@ const Dashboard = () => {
           }
         );
         const responseJson = await response.json();
-       console.log(responseJson);
+      //  console.log(responseJson);
         const newData = [];
         for (let index = 0; index < responseJson?.responseData.length; index++) {
           const element = responseJson?.responseData[index];
@@ -53,12 +54,12 @@ const Dashboard = () => {
       } catch (error) {
         console.log(error);
       }
-    },1000)
+    },5000)
   },[])
 
   return (
     <>
-      <WidgetsDropdown />
+      <WidgetsDropdown apiData={data}/>
       <CCard>
 
       </CCard>
@@ -75,7 +76,7 @@ const Dashboard = () => {
 
               <br />
               {/* edit here */}
-              <table  scrollY className="table table-hover table-outline mb-0 d-none d-sm-table">
+              <table   className="table table-hover table-outline mb-0 d-none d-sm-table">
                 <thead className="thead-light">
                   <tr>
                     <th className="text-center"><CIcon name="cil-people" /></th>
@@ -91,8 +92,8 @@ const Dashboard = () => {
                   {
                     data.map((eachData, index) => {
                       return (
-                        <tr key={index}>
-                    <td className="text-center">
+                        <tr  key={index}>
+                  <td className="text-center">
                       <div className="c-avatar">
                         <img src={'avatars/1.jpg'} className="c-avatar-img" alt="admin@bootstrapmaster.com" />
                         <span className="c-avatar-status bg-success"></span>
