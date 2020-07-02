@@ -1,4 +1,4 @@
-import React, { lazy } from 'react'
+import React, { lazy, useEffect, useState } from 'react'
 import {
   CBadge,
   CButton,
@@ -21,11 +21,46 @@ const WidgetsDropdown = lazy(() => import('../widgets/WidgetsDropdown.js'))
 const WidgetsBrand = lazy(() => import('../widgets/WidgetsBrand.js'))
 
 const Dashboard = () => {
+
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    setInterval(async()=>{
+      try {
+        const response = await fetch(
+          "https://v12qe1f1jf.execute-api.us-east-1.amazonaws.com/Dev/get-all-data",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const responseJson = await response.json();
+       console.log(responseJson);
+        const newData = [];
+        for (let index = 0; index < responseJson?.responseData.length; index++) {
+          const element = responseJson?.responseData[index];
+          newData.push({
+            name: element?.name,
+            arrived: element?.arrived,
+            PhoneNo: element?.PhoneNo,
+            dateTime: element?.dateTime,
+            email:element?.email
+          });
+        }
+        setData(newData)
+      } catch (error) {
+        console.log(error);
+      }
+    },1000)
+  },[])
+
   return (
     <>
       <WidgetsDropdown />
       <CCard>
-      
+
       </CCard>
 
       {/* <WidgetsBrand withCharts/> */}
@@ -33,18 +68,18 @@ const Dashboard = () => {
       <CRow>
         <CCol>
           <CCard>
-            {/* <CCardHeader>
+            <CCardHeader>
               Patients Detail
-            </CCardHeader> */}
+            </CCardHeader>
             <CCardBody>
 
-              {/* <br /> */}
+              <br />
               {/* edit here */}
-              <table className="table table-hover table-outline mb-0 d-none d-sm-table">
+              <table  scrollY className="table table-hover table-outline mb-0 d-none d-sm-table">
                 <thead className="thead-light">
                   <tr>
                     <th className="text-center"><CIcon name="cil-people" /></th>
-                    <th>Patient</th>
+                    <th>Patient Name</th>
                     <th className="text-center">Appointment Time</th>
                     <th>Arrived Status</th>
                     <th className="text-center">With Doctor Status</th>
@@ -53,7 +88,10 @@ const Dashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  {
+                    data.map((eachData, index) => {
+                      return (
+                        <tr key={index}>
                     <td className="text-center">
                       <div className="c-avatar">
                         <img src={'avatars/1.jpg'} className="c-avatar-img" alt="admin@bootstrapmaster.com" />
@@ -61,103 +99,39 @@ const Dashboard = () => {
                       </div>
                     </td>
                     <td>
-                      <div>Yiorgos Avraamu</div>
-                    </td>
-                    <td className="text-center">
-                      <div> 05/01/2020 09:00 AM</div>
-                    </td>
-                    <td>
-                      <div className="clearfix">
-                        <div className="float-left">
-                        <CBadge className="mr-1" color="primary">Yes</CBadge>
-                        </div>
+                      <div>{eachData.name}</div>
+                      <div className="small text-muted">
+                        <span>Contact-</span> {eachData.PhoneNo}
                       </div>
                     </td>
+                    {/* <td className="text-center">
+                      <CIcon height={25} name="cif-us" title="us" id="us" />
+                    </td> */}
+                    <td>
+                        <div className="text-center">
+                        <h6 className="bold">{eachData.dateTime}</h6>
+                        </div>
+
+                    </td>
                     <td className="text-center">
-                      <CSwitch className={'mx-1'} color={'primary'} labelOn={'\u2713'} labelOff={'\u2715'} defaultChecked />
+                    <h6 className="bold"><strong>{eachData.arrived}</strong></h6>
                     </td>
                     <td>
-                      <div className="small text-muted">
+                    <td className="text-center">
+                      <CSwitch  color={'primary'} labelOn={'\u2713'} labelOff={'\u2715'} defaultChecked/>
+                    </td>
+                    </td>
+                    <td>
+                    <div className="small text-muted">
                         <CBadge className="mr-1" color="primary">waiting to be called</CBadge>
                       </div>
                       <CIcon height={25} name="cil-phone" title="phone" id="phone" />
                     </td>
-                    <td>
-                      <div>Dr. Casey</div>
-                    </td>
-                    
+                    <td>with Casey</td>
                   </tr>
-                  <tr>
-                    <td className="text-center">
-                      <div className="c-avatar">
-                        <img src={'avatars/2.jpg'} className="c-avatar-img" alt="admin@bootstrapmaster.com" />
-                        <span className="c-avatar-status bg-danger"></span>
-                      </div>
-                    </td>
-                    <td>
-                      <div>Avram Tarasios</div>
-                    </td>
-                    <td className="text-center">
-                      <div>05/01/2020 09:00 AM</div>
-                    </td>
-                    <td>
-                      <div className="clearfix">
-                        <div className="float-left">
-                          <CBadge className="mr-1" color="secondary">No</CBadge>
-                        </div>
-                      </div>
-                      
-                    </td>
-                    <td className="text-center">
-                      <CSwitch className={'mx-1'} color={'primary'} labelOn={'\u2713'} labelOff={'\u2715'} defaultChecked />
-                    </td>
-                    <td>
-                      <div className="small text-muted">
-                      <CBadge className="mr-1" color="secondary">not arrived</CBadge>
-                        </div>
-                        <CIcon height={25} name="cil-phone" title="phone" id="phone" />
-                    </td>
-                    <td>
-                      <div>Dr. Casey</div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="text-center">
-                      <div className="c-avatar">
-                        <img src={'avatars/3.jpg'} className="c-avatar-img" alt="admin@bootstrapmaster.com" />
-                        <span className="c-avatar-status bg-warning"></span>
-                      </div>
-                    </td>
-                    <td>
-                      <div>Quintin Ed</div>
-                      
-                    </td>
-                    <td className="text-center">
-                      <div>05/01/2020 11:00 AM</div>
-                    </td>
-                    <td>
-                      <div className="clearfix">
-                        <div className="float-left">
-                          <CBadge className="mr-1" color="success">With Doctor</CBadge>
-                        </div>
-                        
-                      </div>
-                      
-                    </td>
-                    <td className="text-center">
-                      <CSwitch className={'mx-1'} color={'primary'} labelOn={'\u2713'} labelOff={'\u2715'} defaultChecked />
-                    </td>
-                    <td>
-                      <div className="small text-muted">
-                        <CBadge className="mr-1" color="info">called</CBadge>
-                      </div>
-                        <CIcon height={25} name="cil-phone" title="phone" id="phone" />
-                    </td>
-                    <td>
-                      <div>Dr. Casey</div>
-                    </td>
-                  </tr>
-                  
+                      )
+                    })
+                  }
                 </tbody>
               </table>
 
