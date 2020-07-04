@@ -2,26 +2,43 @@ import React, { lazy, useEffect, useState } from 'react'
 import {link, Link} from 'react-router-dom';
 import {
   CBadge,
-  CButton,
-  CButtonGroup,
+
   CCard,
   CCardBody,
-  CCardFooter,
+
   CCardHeader,
   CCol,
-  CProgress,
   CRow,
   CSwitch,
-  CCallout
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import { checkPropTypes } from 'prop-types';
 
-import MainChartExample from '../charts/MainChartExample.js'
+ const callPatient=(number, name)=>{
+  //console.log(number);
+  //console.log(name);
+  var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  var targetUrl = 'https://q1fjzbeq8l.execute-api.us-east-1.amazonaws.com/non-prod/make-outbound-call';
+   fetch(proxyUrl+targetUrl, {
+     method: "POST",
+     headers: { 'Access-Control-Allow-Headers': 'Content-Type/JSON',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
+         "X-API-Key": "4ej79ShQA8JeqVFOKV366OnjC4ZMUKk9kUWnOat2",
+         "Content-Type": "application/json"
+     },
+     body: JSON.stringify({
+         "callbackNumber": number.toString(),
+         "name": name
+     }),
+
+ })
+}
 
 const WidgetsDropdown = lazy(() => import('../widgets/WidgetsDropdown.js'))
-const WidgetsBrand = lazy(() => import('../widgets/WidgetsBrand.js'))
 
 const Dashboard = () => {
+
 
   const [data, setData] = useState([])
 
@@ -54,7 +71,7 @@ const Dashboard = () => {
       } catch (error) {
         console.log(error);
       }
-    },5000)
+    },1000)
   },[])
 
   return (
@@ -118,15 +135,23 @@ const Dashboard = () => {
                     <h6 className="bold"><strong>{eachData.arrived}</strong></h6>
                     </td>
                     <td>
-                    <td className="text-center">
+                    <td className={"text-center"+
+                    (eachData.arrived === "With Doctor")+
+                    (eachData.arrived === "Yes")+
+                    (eachData.arrived === "No")}>
                       <CSwitch  color={'primary'} labelOn={'\u2713'} labelOff={'\u2715'} defaultChecked/>
                     </td>
                     </td>
                     <td>
-                    <div className="small text-muted">
-                        <CBadge className="mr-1" color="primary">waiting to be called</CBadge>
+                    <div className="text-muted">
+                        <CBadge className="mr-1" color="primary">
+                          waiting to be called</CBadge>
+                        <button disabled className="btn btn-primary" onClick={() => {
+                      callPatient(eachData.PhoneNo, eachData.name)}}>
+                        <CIcon height={20} name="cil-phone" title="phone" id="phone" />
+                      </button>
                       </div>
-                      <CIcon height={25} name="cil-phone" title="phone" id="phone" />
+
                     </td>
                     <td>with Casey</td>
                   </tr>

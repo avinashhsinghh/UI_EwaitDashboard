@@ -2,41 +2,41 @@ import React from 'react'
 import {
   CWidgetDropdown,
   CRow,
-  CCol,
-  CDropdown,
-  CDropdownMenu,
-  CDropdownItem,
-  CDropdownToggle
+  CCol
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import ChartLineSimple from '../charts/ChartLineSimple'
-import ChartBarSimple from '../charts/ChartBarSimple'
+
+
+
 let array1;
-let appBook;
+let appBook,array2;
+
+// eslint-disable-next-line no-unused-vars
 function countnumber(props){
+  console.log(props)
   let patientArriveYes=0,patientArriveNo=0;
   let i=0;
   console.log(props.apiData)
-  for(i=0;i<props.props.apiData.length();i++)
-  { if(props.apiData.arrived=="With Doctor")
+       for(i=0;i<props.apiData.length();i++)
+       { if(props.apiData.arrived==="With Doctor")
     appBook=appBook+1
-    else if (props.apiData.arrived=="No")
+    else if (props.apiData.arrived==="No")
     patientArriveNo=patientArriveNo+1
-    else if(props.apiData.arrived=="Yes")
+    else if(props.apiData.arrived==="Yes")
     patientArriveYes=patientArriveYes+1
-  }
-  array1[0]=appBook
-  array1[1]=patientArriveNo
-  array1[2]=patientArriveYes
-
+       }
+         array1[0]=appBook
+         array1[1]=patientArriveNo
+         array1[2]=patientArriveYes
+       console.log("End of Count Number")
   return array1
 
 }
 
+
 const WidgetsDropdown = (props) => {
   // render
-  console.log(props.apiData)
-
+ // console.log(props.apiData)
+ //array2=countnumber(props);
   return (
     <CRow>
       <CCol sm="6" lg="3">
@@ -48,7 +48,6 @@ const WidgetsDropdown = (props) => {
             <div></div>
           }
         >
-
         </CWidgetDropdown>
       </CCol>
 
