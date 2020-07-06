@@ -41,6 +41,9 @@ const Dashboard = () => {
 
 
   const [data, setData] = useState([])
+  const [buttonStatus, setButtonStatus] = useState(0);
+  const[checkedStatus,setcheckedStatus]=useState(true);
+
 
   useEffect(() => {
     setInterval(async()=>{
@@ -93,7 +96,7 @@ const Dashboard = () => {
 
               <br />
               {/* edit here */}
-              <table   className="table table-hover table-outline mb-0 d-none d-sm-table">
+              <table   className="table table-hover table-outline mb-0 d-none d-sm-table ">
                 <thead className="thead-light">
                   <tr>
                     <th className="text-center"><CIcon name="cil-people" /></th>
@@ -112,7 +115,7 @@ const Dashboard = () => {
                         <tr  key={index}>
                   <td className="text-center">
                       <div className="c-avatar">
-                        <img src={'avatars/1.jpg'} className="c-avatar-img" alt="admin@bootstrapmaster.com" />
+                        <img src={'avatars/1.jpg'} className="c-avatar-img"/>
                         <span className="c-avatar-status bg-success"></span>
                       </div>
                     </td>
@@ -135,11 +138,8 @@ const Dashboard = () => {
                     <h6 className="bold"><strong>{eachData.arrived}</strong></h6>
                     </td>
                     <td>
-                    <td className={"text-center"+
-                    (eachData.arrived === "With Doctor")+
-                    (eachData.arrived === "Yes")+
-                    (eachData.arrived === "No")}>
-                      <CSwitch  color={'primary'} labelOn={'\u2713'} labelOff={'\u2715'} defaultChecked/>
+                    <td className={"text-center"}>
+                      <CSwitch  color={'primary'} labelOn={'\u2713'} labelOff={'\u2715'} defaultValue={checkedStatus}/>
                     </td>
                     </td>
                     <td>
