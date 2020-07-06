@@ -93,6 +93,24 @@ const Dashboard = () => {
     console.log("respone", jsonResponse)
   }
 
+  const changeStatusToYes = async (data) => {
+    const response = await fetch("https://v12qe1f1jf.execute-api.us-east-1.amazonaws.com/Dev/get-patient-data", {
+      method: "POST",
+      body: JSON.stringify({
+        "name": data.name,
+        "email": data.email,
+        "DOB": data.DOB,
+        "PhoneNo": data.PhoneNo,
+        "arrived": "Yes",
+        "dateTime": data.dateTime
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    const jsonResponse = response.json();
+    console.log("respone", jsonResponse)
+  }
 
   return (
     <>
@@ -165,6 +183,8 @@ const Dashboard = () => {
                                 disabled={eachData.arrived === "No" && true}
                                 onChange={(event) => {
                                   changeStatusToWithDoctor(eachData)
+                                  changeStatusToYes(eachData)
+
                                 }} />
                             </td>
                           </td>
