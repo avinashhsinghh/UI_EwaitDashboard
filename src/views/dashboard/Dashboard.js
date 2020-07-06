@@ -65,7 +65,7 @@ const Dashboard = () => {
           newData.push(element);
         }
         setData(newData)
-        console.log("newData", newData)
+        //console.log("newData", newData)
         setTotalArrived(newData.filter(eachData => eachData.arrived === "Yes").length)
         setPatientWithDoctor(newData.filter(eachData => eachData.arrived === "With Doctor").length)
       } catch (error) {
@@ -90,7 +90,7 @@ const Dashboard = () => {
       }
     })
     const jsonResponse = response.json();
-    console.log("respone", jsonResponse)
+    //console.log("respone", jsonResponse)
   }
 
   const changeStatusToYes = async (data) => {
@@ -109,7 +109,7 @@ const Dashboard = () => {
       }
     })
     const jsonResponse = response.json();
-    console.log("respone", jsonResponse)
+    //console.log("respone", jsonResponse)
   }
 
   return (
