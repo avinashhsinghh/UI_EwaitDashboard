@@ -1,11 +1,9 @@
 import React, { lazy, useEffect, useState } from 'react'
-import {link, Link} from 'react-router-dom';
+import { link, Link } from 'react-router-dom';
 import {
   CBadge,
-
   CCard,
   CCardBody,
-
   CCardHeader,
   CCol,
   CRow,
@@ -14,25 +12,24 @@ import {
 import CIcon from '@coreui/icons-react'
 import { checkPropTypes } from 'prop-types';
 
- const callPatient=(number, name)=>{
-  //console.log(number);
-  //console.log(name);
+const callPatient = (number, name) => {
   var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
   var targetUrl = 'https://q1fjzbeq8l.execute-api.us-east-1.amazonaws.com/non-prod/make-outbound-call';
-   fetch(proxyUrl+targetUrl, {
-     method: "POST",
-     headers: { 'Access-Control-Allow-Headers': 'Content-Type/JSON',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
-         "X-API-Key": "4ej79ShQA8JeqVFOKV366OnjC4ZMUKk9kUWnOat2",
-         "Content-Type": "application/json"
-     },
-     body: JSON.stringify({
-         "callbackNumber": number.toString(),
-         "name": name
-     }),
+  fetch(proxyUrl + targetUrl, {
+    method: "POST",
+    headers: {
+      'Access-Control-Allow-Headers': 'Content-Type/JSON',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
+      "X-API-Key": "4ej79ShQA8JeqVFOKV366OnjC4ZMUKk9kUWnOat2",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      "callbackNumber": number.toString(),
+      "name": name
+    }),
 
- })
+  })
 }
 
 const WidgetsDropdown = lazy(() => import('../widgets/WidgetsDropdown.js'))
@@ -42,11 +39,14 @@ const Dashboard = () => {
 
   const [data, setData] = useState([])
   const [buttonStatus, setButtonStatus] = useState(0);
-  const[checkedStatus,setcheckedStatus]=useState(true);
+  const [checkedStatus, setcheckedStatus] = useState(true);
+  const [totalArrived, setTotalArrived] = useState(0)
+  const [waitingToBeCalled, setWaitingToBeCalled] = useState(0)
+  const [paitentWithDoctor, setPatientWithDoctor] = useState(0)
 
 
   useEffect(() => {
-    setInterval(async()=>{
+    setInterval(async () => {
       try {
         const response = await fetch(
           "https://v12qe1f1jf.execute-api.us-east-1.amazonaws.com/Dev/get-all-data",
@@ -58,28 +58,45 @@ const Dashboard = () => {
           }
         );
         const responseJson = await response.json();
-      //  console.log(responseJson);
+        //  console.log(responseJson);
         const newData = [];
         for (let index = 0; index < responseJson?.responseData.length; index++) {
           const element = responseJson?.responseData[index];
-          newData.push({
-            name: element?.name,
-            arrived: element?.arrived,
-            PhoneNo: element?.PhoneNo,
-            dateTime: element?.dateTime,
-            email:element?.email
-          });
+          newData.push(element);
         }
         setData(newData)
+        console.log("newData", newData)
+        setTotalArrived(newData.filter(eachData => eachData.arrived === "Yes").length)
+        setPatientWithDoctor(newData.filter(eachData => eachData.arrived === "With Doctor").length)
       } catch (error) {
         console.log(error);
       }
-    },1000)
-  },[])
+    }, 1000)
+  }, [])
+
+  const changeStatusToWithDoctor = async (data) => {
+    const response = await fetch("https://v12qe1f1jf.execute-api.us-east-1.amazonaws.com/Dev/get-patient-data", {
+      method: "POST",
+      body: JSON.stringify({
+        "name": data.name,
+        "email": data.email,
+        "DOB": data.DOB,
+        "PhoneNo": data.PhoneNo,
+        "arrived": "With Doctor",
+        "dateTime": data.dateTime
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    const jsonResponse = response.json();
+    console.log("respone", jsonResponse)
+  }
+
 
   return (
     <>
-      <WidgetsDropdown apiData={data}/>
+      <WidgetsDropdown total={data.length} totalArrived={totalArrived} paitentWithDoctor={paitentWithDoctor} />
       <CCard>
 
       </CCard>
@@ -96,7 +113,7 @@ const Dashboard = () => {
 
               <br />
               {/* edit here */}
-              <table   className="table table-hover table-outline mb-0 d-none d-sm-table ">
+              <table className="table table-hover table-outline mb-0 d-none d-sm-table ">
                 <thead className="thead-light">
                   <tr>
                     <th className="text-center"><CIcon name="cil-people" /></th>
@@ -112,49 +129,63 @@ const Dashboard = () => {
                   {
                     data.map((eachData, index) => {
                       return (
-                        <tr  key={index}>
-                  <td className="text-center">
-                      <div className="c-avatar">
-                        <img src={'avatars/1.jpg'} className="c-avatar-img"/>
-                        <span className="c-avatar-status bg-success"></span>
-                      </div>
-                    </td>
-                    <td>
-                      <div>{eachData.name}</div>
-                      <div className="small text-muted">
-                        <span>Contact-</span> {eachData.PhoneNo}
-                      </div>
-                    </td>
-                    {/* <td className="text-center">
+                        <tr key={index}>
+                          <td className="text-center">
+                            <div className="c-avatar">
+                              <img src={'avatars/1.jpg'} className="c-avatar-img" />
+                              <span className="c-avatar-status bg-success"></span>
+                            </div>
+                          </td>
+                          <td>
+                            <div>{eachData.name}</div>
+                            <div className="small text-muted">
+                              <span>Contact-</span> {eachData.PhoneNo}
+                            </div>
+                          </td>
+                          {/* <td className="text-center">
                       <CIcon height={25} name="cif-us" title="us" id="us" />
                     </td> */}
-                    <td>
-                        <div className="text-center">
-                        <h6 className="bold">{eachData.dateTime}</h6>
-                        </div>
+                          <td>
+                            <div className="text-center">
+                              <h6 className="bold">{eachData.dateTime}</h6>
+                            </div>
 
-                    </td>
-                    <td className="text-center">
-                    <h6 className="bold"><strong>{eachData.arrived}</strong></h6>
-                    </td>
-                    <td>
-                    <td className={"text-center"}>
-                      <CSwitch  color={'primary'} labelOn={'\u2713'} labelOff={'\u2715'} defaultValue={checkedStatus}/>
-                    </td>
-                    </td>
-                    <td>
-                    <div className="text-muted">
-                        <CBadge className="mr-1" color="primary">
-                          waiting to be called</CBadge>
-                        <button disabled className="btn btn-primary" onClick={() => {
-                      callPatient(eachData.PhoneNo, eachData.name)}}>
-                        <CIcon height={20} name="cil-phone" title="phone" id="phone" />
-                      </button>
-                      </div>
+                          </td>
+                          <td className="text-center">
+                            <h6 className="bold"><strong>{eachData.arrived}</strong></h6>
+                          </td>
+                          <td>
+                            <td className={"text-center"}>
+                              <CSwitch
+                                color={'primary'}
+                                labelOn={'\u2713'}
+                                labelOff={'\u2715'}
+                                defaultValue={checkedStatus}
+                                checked={eachData.arrived === "With Doctor" ? true : false}
+                                disabled={eachData.arrived === "No" && true}
+                                onChange={(event) => {
+                                  changeStatusToWithDoctor(eachData)
+                                }} />
+                            </td>
+                          </td>
+                          <td>
+                            <div className="text-muted">
+                              <CBadge className="mr-1" color="primary">
+                              { eachData.callCount > 0 ? ("called" + eachData.callCount) : "waiting to be called"  }
+                              </CBadge>
+                              <button
+                              disabled={(eachData.arrived === "With Doctor" ? false : true)}
+                              className="btn btn-primary" onClick={() => {
+                                alert(eachData.callCount)
+                                callPatient(eachData.PhoneNo, eachData.name)
+                              }}>
+                                <CIcon height={20} name="cil-phone" title="phone" id="phone" />
+                              </button>
+                            </div>
 
-                    </td>
-                    <td>with Casey</td>
-                  </tr>
+                          </td>
+                          <td>with Casey</td>
+                        </tr>
                       )
                     })
                   }

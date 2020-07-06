@@ -7,14 +7,7 @@ import {
 
 
 
-let array1;
-let appBook,array2;
-
-// eslint-disable-next-line no-unused-vars
-
-
-
-const WidgetsDropdown = (props) => {
+const WidgetsDropdown = ({total, totalArrived, paitentWithDoctor}) => {
 
 
 
@@ -25,7 +18,7 @@ const WidgetsDropdown = (props) => {
       <CCol sm="6" lg="3">
         <CWidgetDropdown
           color="gradient-primary"
-          header={props.apiData.length}
+          header={total}
           text="Total Appointment Booked"
           footerSlot={
             <div></div>
@@ -38,7 +31,7 @@ const WidgetsDropdown = (props) => {
         <CWidgetDropdown
 
           color="gradient-info"
-          header="15"
+          header={totalArrived}
           text="Total Patient Arrived"
           footerSlot={
             <div></div>
@@ -64,7 +57,7 @@ const WidgetsDropdown = (props) => {
       <CCol sm="6" lg="3">
         <CWidgetDropdown
           color="gradient-danger"
-          header="6"
+          header={paitentWithDoctor}
           text="Patient with Doctor"
           footerSlot={
             <div></div>
