@@ -2,43 +2,42 @@ import React from 'react'
 import {
   CWidgetDropdown,
   CRow,
-  CCol,
-  CDropdown,
-  CDropdownMenu,
-  CDropdownItem,
-  CDropdownToggle
+  CCol
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import ChartLineSimple from '../charts/ChartLineSimple'
-import ChartBarSimple from '../charts/ChartBarSimple'
 
-const WidgetsDropdown = () => {
-  // render
+
+
+const WidgetsDropdown = ({total, totalArrived, paitentWithDoctor}) => {
+
+
+
+ // console.log(props.apiData)
+ //array2=countnumber(props);
   return (
     <CRow>
       <CCol sm="6" lg="3">
         <CWidgetDropdown
           color="gradient-primary"
-          header="20"
+          header={total}
           text="Total Appointment Booked"
           footerSlot={
             <div></div>
           }
         >
-    
         </CWidgetDropdown>
       </CCol>
 
       <CCol sm="6" lg="3">
         <CWidgetDropdown
+
           color="gradient-info"
-          header="15"
+          header={totalArrived}
           text="Total Patient Arrived"
           footerSlot={
             <div></div>
           }
         >
-          
+
         </CWidgetDropdown>
       </CCol>
 
@@ -51,20 +50,20 @@ const WidgetsDropdown = () => {
             <div></div>
           }
         >
-          
+
         </CWidgetDropdown>
       </CCol>
 
       <CCol sm="6" lg="3">
         <CWidgetDropdown
           color="gradient-danger"
-          header="6"
+          header={paitentWithDoctor}
           text="Patient with Doctor"
           footerSlot={
             <div></div>
           }
         >
-          
+
         </CWidgetDropdown>
       </CCol>
     </CRow>
